@@ -1,7 +1,6 @@
 const { InjectManifest } = require('workbox-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
 
 module.exports = {
   devServer: {
@@ -12,14 +11,19 @@ module.exports = {
   },
 
   devtool: 'cheap-source-map',
-
-  entry: ['react-hot-loader/patch', './src/index.js'],
+  entry: './src/index.tsx',
 
   module: {
     rules: [
       {
+        exclude: /node_modules/,
         test: /\.js$/,
         use: 'babel-loader',
+      },
+      {
+        exclude: /node_modules/,
+        test: /\.tsx?$/,
+        use: 'ts-loader',
       },
     ],
   },
@@ -77,18 +81,7 @@ module.exports = {
     new InjectManifest({
       swSrc: './src/service-worker.js',
     }),
-
-    new webpack.ProvidePlugin({
-      PropTypes: 'prop-types',
-      React: 'react',
-    }),
   ],
-
-  resolve: {
-    alias: {
-      'react-dom': '@hot-loader/react-dom',
-    },
-  },
 
   stats: {
     builtAt: false,
@@ -96,5 +89,9 @@ module.exports = {
     excludeAssets: [/images[/\\]/, /precache-manifest\./, /robots\.txt/],
     hash: false,
     modules: false,
+  },
+
+  resolve: {
+    extensions: ['.js', '.ts', '.tsx'],
   },
 };

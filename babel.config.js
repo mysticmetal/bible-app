@@ -4,7 +4,7 @@ module.exports = (api) => {
   const isRelease = process.env.RELEASE === 'true';
 
   const config = {
-    plugins: [['babel-plugin-styled-components', { fileName: false }], 'react-hot-loader/babel'],
+    plugins: [['babel-plugin-styled-components', { fileName: false }]],
     presets: ['@babel/preset-react'],
   };
 
